@@ -22,6 +22,18 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
     // Invisible button to signal that outside the picker has been clicked
     var invisButton = UIButton()
     
+    /**
+        Needed for Objective-C bridging
+     */
+    
+    public convenience init(sdk: SmartcarAuth, viewController: UIViewController, oem: [Int]?){
+        var oemList = OEM.getDefaultOEMList()
+        if let oem = oem {
+           oemList = oem.flatMap { OEMName(rawValue: $0) }
+        }
+        self.init(sdk: sdk, viewController: viewController, oemList: oemList)
+    }
+    
     public init(sdk: SmartcarAuth, viewController: UIViewController, oemList: [OEMName] = OEM.getDefaultOEMList()){
         super.init(sdk: sdk, viewController: viewController)
         self.oemList = oemList
@@ -55,7 +67,7 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
     /**
         Action methods for the pressing of the initial picker button. Formats and displays the UIPickerView, UIToolbar, and the invisible button
     */
-    @objc func pickerButtonPressed() {
+    @objc public func pickerButtonPressed() {
         self.picker = UIPickerView()
         self.picker.dataSource = self
         self.picker.delegate = self
@@ -71,13 +83,14 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
         self.toolBar.isUserInteractionEnabled = true
         
         self.invisButton = UIButton()
-        self.invisButton.backgroundColor = UIColor(white: 0, alpha: 0)
+        self.invisButton.backgroundColor = UIColor(white: 0, alpha: 0.3)
         self.invisButton.addTarget(self, action: #selector(hidePickerView), for: .touchUpInside)
         self.invisButton.translatesAutoresizingMaskIntoConstraints = false
+        self.invisButton.alpha = 0
         
+        self.viewController.view.addSubview(self.invisButton)
         self.viewController.view.addSubview(self.picker)
         self.viewController.view.addSubview(self.toolBar)
-        self.viewController.view.addSubview(self.invisButton)
         
         //Format constraints for autolayout
         let pickerPinBottom = NSLayoutConstraint(item: self.picker, attribute: .bottom, relatedBy: .equal, toItem: self.viewController.view, attribute: .bottom, multiplier: 1.0, constant: 0)
@@ -86,10 +99,22 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
         let toolbarPinToPicker = NSLayoutConstraint(item: self.toolBar, attribute: .bottom, relatedBy: .equal, toItem: self.picker, attribute: .top, multiplier: 1.0, constant: 0)
         let toolbarWidth = NSLayoutConstraint(item: self.toolBar, attribute: .width, relatedBy: .equal, toItem: self.viewController.view, attribute: .width, multiplier: 1, constant: 0)
         let invisButtonPinTop = NSLayoutConstraint(item: self.invisButton, attribute: .top, relatedBy: .equal, toItem: self.viewController.view, attribute: .top, multiplier: 1.0, constant: 0)
-        let invisButtonPinBottom = NSLayoutConstraint(item: self.invisButton, attribute: .bottom, relatedBy: .equal, toItem: self.toolBar, attribute: .top, multiplier: 1, constant: 0)
+        let invisButtonPinBottom = NSLayoutConstraint(item: self.invisButton, attribute: .bottom, relatedBy: .equal, toItem: self.viewController.view, attribute: .bottom, multiplier: 1, constant: 0)
         let invisButtonWidth = NSLayoutConstraint(item: self.invisButton, attribute: .width, relatedBy: .equal, toItem: self.viewController.view, attribute: .width, multiplier: 1, constant: 0)
         
         self.viewController.view.addConstraints([pickerPinBottom, pickerHeight, pickerWidth, toolbarPinToPicker, toolbarWidth,invisButtonPinTop, invisButtonWidth, invisButtonPinBottom])
+        
+        let bottomFrame = CGRect(x: 0, y: self.viewController.view.bounds.maxY,
+                                 width: self.viewController.view.bounds.maxX, height: 40);
+        self.picker.frame = bottomFrame
+        self.toolBar.frame = bottomFrame
+        self.toolBar.layoutIfNeeded()
+        self.invisButton.frame = self.viewController.view.bounds
+        
+        UIView.animate(withDuration: 0.3) {
+            self.viewController.view.layoutIfNeeded()
+            self.invisButton.alpha = 1
+        }
     }
     
     /**
@@ -98,18 +123,25 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
     @objc func donePicker() {
         hidePickerView()
         let val = self.oemList[picker.selectedRow(inComponent: 0)]
-        let name = val.rawValue
-        
-        self.sdk.initializeAuthorizationRequest(for: OEMName(rawValue: name.lowercased())!, viewController: self.viewController)
+        self.sdk.initializeAuthorizationRequest(for: val, viewController: self.viewController)
     }
     
     /**
         Hides the picker, invisButton, and toolBar
     */
     @objc func hidePickerView() {
-        picker.isHidden = true
-        invisButton.isHidden = true
-        toolBar.isHidden = true
+        let bottomFrame = CGRect(x: 0, y: self.viewController.view.bounds.maxY,
+                                 width: self.viewController.view.bounds.maxX, height: 0);
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.invisButton.alpha = 0
+            self.picker.frame = bottomFrame
+            self.toolBar.frame = bottomFrame
+        }, completion: { _ in
+            self.invisButton.removeFromSuperview()
+            self.picker.removeFromSuperview()
+            self.toolBar.removeFromSuperview()
+        })
     }
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -120,7 +152,18 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
         return self.oemList.count
     }
     
-    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return OEM.getDisplayName(for: self.oemList[row]).uppercased()
+    public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let name = OEM.getDisplayName(for: self.oemList[row])
+        
+        let imgName = "SmartcarAuthResources.bundle/" + self.oemList[row].stringValue + "_logo.png"
+        let img = UIImage(named: imgName, in: Bundle(for: type(of: self)), compatibleWith: nil)
+        let imgAttachment = NSTextAttachment()
+        imgAttachment.image = img;
+        imgAttachment.bounds = CGRect(x: 0, y: -5, width: 25, height: 25)
+        
+        let attrString = NSMutableAttributedString()
+        attrString.append(NSAttributedString(attachment: imgAttachment))
+        attrString.append(NSAttributedString(string: "  " + name))
+        return attrString
     }
 }

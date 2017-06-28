@@ -152,18 +152,7 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
         return self.oemList.count
     }
     
-    public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let name = OEM.getDisplayName(for: self.oemList[row])
-        
-        let imgName = "SmartcarAuthResources.bundle/" + self.oemList[row].stringValue + "_logo.png"
-        let img = UIImage(named: imgName, in: Bundle(for: type(of: self)), compatibleWith: nil)
-        let imgAttachment = NSTextAttachment()
-        imgAttachment.image = img;
-        imgAttachment.bounds = CGRect(x: 0, y: -5, width: 25, height: 25)
-        
-        let attrString = NSMutableAttributedString()
-        attrString.append(NSAttributedString(attachment: imgAttachment))
-        attrString.append(NSAttributedString(string: "  " + name))
-        return attrString
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return OEM.getDisplayName(for: self.oemList[row])
     }
 }

@@ -54,7 +54,7 @@ smartcar.initializeAuthorizationRequest(for oem: OEMName.acura, viewController: 
 
 `clientId`
 
-Application client ID obtained from [Smartcar Developer Portal] (https://developer.smartcar.com/).
+Application client ID obtained from [Smartcar Developer Portal](https://developer.smartcar.com/).
 
 `redirectURI`
 
@@ -64,7 +64,7 @@ format of `"sc" + clientId + "://" + hostname`. This URI must also be registered
 in [Smartcar's developer portal](https://developer.smartcar.com) for your app.
 You may append an optional path component or TLD (e.g. `sc4a1b01e5-0497-417c-a30e-6df6ba33ba46://oauth2redirect.com/page`).
 
-More information on [configuration of custom scheme] (http://www.idev101.com/code/Objective-C/custom_url_schemes.html).
+More information on [configuration of custom scheme](http://www.idev101.com/code/Objective-C/custom_url_schemes.html).
 
 `scope`
 
@@ -122,7 +122,7 @@ are styled with the OEM's logo and colors.
 
 Here are an example of a BMW button: 
 
-![](Example/Assets.xcassets/buttons.png)
+![](SmartcarAuthExample/SmartcarAuthExample/Assets.xcassets/buttons.png)
 
 
 In this example we initialize the Client SDK and generate a single button to
@@ -170,7 +170,7 @@ self.view.addSubview(button)
 Below is the generated UIPickerView in action
 
 <p align="center">
-  <img src="Example/Assets.xcassets/picker.png"/>
+  <img src="SmartcarAuthExample/SmartcarAuthExample/Assets.xcassets/picker.png"/>
 </p>
 
 ## Example

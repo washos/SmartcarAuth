@@ -17,7 +17,7 @@ import SafariServices
             access token
 */
 
-public class SmartcarAuth {
+public class SmartcarAuth: NSObject {
     let request: SmartcarAuthRequest
 
     /**
@@ -80,12 +80,11 @@ public class SmartcarAuth {
         let scopeString = self.request.scope.joined(separator: " ")
             .addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)!
         
-        return "https://\(oem.rawValue).smartcar.com/oauth/authorize?response_type=\(self.request.grantType.rawValue)&client_id=\(self.request.clientID)&redirect_uri=\(redirectString)&scope=\(scopeString)&approval_prompt=\(self.request.approvalType.rawValue + stateString)";
+        return "https://\(oem.stringValue).smartcar.com/oauth/authorize?response_type=\(self.request.grantType.stringValue)&client_id=\(self.request.clientID)&redirect_uri=\(redirectString)&scope=\(scopeString)&approval_prompt=\(self.request.approvalType.rawValue + stateString)";
     }
     
     /**
-        Authorization callback function. Verifies the state parameter of the URL matches the request state parameter and
-            extract the authorization code
+        Authorization callback function. Verifies the state parameter of the URL matches the request state parameter and extract the authorization code
      
         - Parameters
             - url: callback URL containing authorization code
@@ -93,7 +92,7 @@ public class SmartcarAuth {
         - Returns:
             true if authorization code was successfully extracted
     */
-    public func resumeAuthorizationFlowWithURL(url: URL) throws -> String {
+    public func resumeAuthorizationFlow(with url: URL) throws -> String {
         let urlComp = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let query = urlComp?.queryItems
         

@@ -15,11 +15,13 @@ import Foundation
 @objc public enum GrantType: Int {
     case code
     case token
-    
+
     var stringValue: String {
         switch self {
-        case .code:     return "code"
-        case .token:    return "token"
+        case .code:
+            return "code"
+        case .token:
+            return "token"
         }
     }
 }

@@ -6,13 +6,13 @@
 //  Copyright © 2017 Smartcar Inc. All rights reserved.
 //
 
+import Foundation
+
 /**
     Class encapsulating the data required within a Smartcar Authorization Request
  */
 
-import Foundation
-
-@objc public class SmartcarAuthRequest : NSObject {
+@objc public class SmartcarAuthRequest: NSObject {
     let clientID: String // app client ID
     let redirectURI: String //app redirect URI
     let scope: [String] //app oauth scope
@@ -20,10 +20,10 @@ import Foundation
     let grantType: GrantType //oauth grant type enum
     let approvalType: ApprovalType // force permission screen of ApprovalType enum
     let development: Bool // appends mock oem if true
-    
+
     /**
      Initializes the SmartcarAuth Object
-     
+
      - Parameters:
         - clientID: app client ID
         - redirectURI: app redirect URI

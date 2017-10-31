@@ -21,7 +21,11 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
     var toolBar = UIToolbar()
     // Invisible button to signal that outside the picker has been clicked
     var invisButton = UIButton()
-
+    // Constraint attaching picker to bottom
+    var pickerPinBottom: NSLayoutConstraint?
+    // Constraint attaching toolbar to bottom
+    var toolbarPinBottom: NSLayoutConstraint?
+    
     public convenience init(sdk: SmartcarAuth, viewController: UIViewController, oem: [Int]?) {
         var oemList = OEM.getDefaultOEMList()
         if let oem = oem {
@@ -82,32 +86,36 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
         self.invisButton.backgroundColor = UIColor(white: 0, alpha: 0.3)
         self.invisButton.addTarget(self, action: #selector(hidePickerView), for: .touchUpInside)
         self.invisButton.translatesAutoresizingMaskIntoConstraints = false
-        self.invisButton.alpha = 0
 
         self.viewController.view.addSubview(self.invisButton)
         self.viewController.view.addSubview(self.picker)
         self.viewController.view.addSubview(self.toolBar)
 
         //Format constraints for autolayout
-        let pickerPinBottom = NSLayoutConstraint(item: self.picker, attribute: .bottom, relatedBy: .equal, toItem: self.viewController.view, attribute: .bottom, multiplier: 1.0, constant: 0)
+        pickerPinBottom = NSLayoutConstraint(item: self.picker, attribute: .bottom, relatedBy: .equal, toItem: self.viewController.view, attribute: .bottom, multiplier: 1.0, constant: 0)
         let pickerHeight = NSLayoutConstraint(item: self.picker, attribute: .height, relatedBy: .equal, toItem: self.viewController.view, attribute: .height, multiplier: 0.33, constant: 0)
         let pickerWidth = NSLayoutConstraint(item: self.picker, attribute: .width, relatedBy: .equal, toItem: self.viewController.view, attribute: .width, multiplier: 1, constant: 0)
+        let pickerLeft = NSLayoutConstraint(item: self.picker, attribute: .leading, relatedBy: .equal, toItem: self.viewController.view, attribute: .leading, multiplier: 1, constant: 0)
+        toolbarPinBottom = NSLayoutConstraint(item: self.toolBar, attribute: .top, relatedBy: .equal, toItem: self.viewController.view, attribute: .bottom, multiplier: 1, constant: 0)
         let toolbarPinToPicker = NSLayoutConstraint(item: self.toolBar, attribute: .bottom, relatedBy: .equal, toItem: self.picker, attribute: .top, multiplier: 1.0, constant: 0)
         let toolbarWidth = NSLayoutConstraint(item: self.toolBar, attribute: .width, relatedBy: .equal, toItem: self.viewController.view, attribute: .width, multiplier: 1, constant: 0)
+        let toolbarLeft = NSLayoutConstraint(item: self.toolBar, attribute: .leading, relatedBy: .equal, toItem: self.viewController.view, attribute: .leading, multiplier: 1, constant: 0)
         let invisButtonPinTop = NSLayoutConstraint(item: self.invisButton, attribute: .top, relatedBy: .equal, toItem: self.viewController.view, attribute: .top, multiplier: 1.0, constant: 0)
         let invisButtonPinBottom = NSLayoutConstraint(item: self.invisButton, attribute: .bottom, relatedBy: .equal, toItem: self.viewController.view, attribute: .bottom, multiplier: 1, constant: 0)
         let invisButtonWidth = NSLayoutConstraint(item: self.invisButton, attribute: .width, relatedBy: .equal, toItem: self.viewController.view, attribute: .width, multiplier: 1, constant: 0)
-
-        self.viewController.view.addConstraints([pickerPinBottom, pickerHeight, pickerWidth, toolbarPinToPicker, toolbarWidth,invisButtonPinTop, invisButtonWidth, invisButtonPinBottom])
-
-        let bottomFrame = CGRect(x: 0, y: self.viewController.view.bounds.maxY,
-                                 width: self.viewController.view.bounds.maxX, height: 40);
-        self.picker.frame = bottomFrame
-        self.toolBar.frame = bottomFrame
-        self.toolBar.layoutIfNeeded()
-        self.invisButton.frame = self.viewController.view.bounds
-
+        let invisButtonLeft = NSLayoutConstraint(item: self.invisButton, attribute: .leading, relatedBy: .equal, toItem: self.viewController.view, attribute: .leading, multiplier: 1, constant: 0)
+        
+        self.viewController.view.addConstraints([pickerHeight, pickerWidth, pickerLeft, toolbarPinToPicker, toolbarWidth, toolbarLeft, invisButtonPinTop, invisButtonWidth, invisButtonPinBottom, invisButtonLeft])
+        
+        //Setup initial state
+        self.viewController.view.addConstraint(toolbarPinBottom!)
+        self.viewController.view.layoutIfNeeded()
+        self.invisButton.alpha = 0
+        
+        //Animate appearance
         UIView.animate(withDuration: 0.3) {
+            self.viewController.view.removeConstraint(self.toolbarPinBottom!)
+            self.viewController.view.addConstraint(self.pickerPinBottom!)
             self.viewController.view.layoutIfNeeded()
             self.invisButton.alpha = 1
         }
@@ -127,13 +135,14 @@ public class SmartcarAuthPickerGenerator: SmartcarAuthUIGenerator, UIPickerViewD
         Hides the picker, invisButton, and toolBar
     */
     @objc func hidePickerView() {
-        let bottomFrame = CGRect(x: 0, y: self.viewController.view.bounds.maxY,
-                                 width: self.viewController.view.bounds.maxX, height: 0);
-
+        viewController.view.layoutIfNeeded()
+        
+        //Animate disappearance
         UIView.animate(withDuration: 0.3, animations: {
+            self.viewController.view.removeConstraint(self.pickerPinBottom!)
+            self.viewController.view.addConstraint(self.toolbarPinBottom!)
+            self.viewController.view.layoutIfNeeded()
             self.invisButton.alpha = 0
-            self.picker.frame = bottomFrame
-            self.toolBar.frame = bottomFrame
         }, completion: { _ in
             self.invisButton.removeFromSuperview()
             self.picker.removeFromSuperview()

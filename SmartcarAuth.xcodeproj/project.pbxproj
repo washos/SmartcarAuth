@@ -70,12 +70,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F8A1E9741E8962CA00021C83 /* PBXContainerItemProxy */ = {
+		978DDD051FA8703800D7E578 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8A1E9691E8962C900021C83 /* SmartcarAuthExample.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8A1E9491E89628900021C83;
-			remoteInfo = SmartcarAuthExample;
+			containerPortal = F8F928781E2B2F6A009F07E5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8F928BA1E2B30E5009F07E5;
+			remoteInfo = Example;
 		};
 		F8A1E97F1E8968D000021C83 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -117,7 +117,6 @@
 		F8A1E9661E8962C900021C83 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F8A1E9671E8962C900021C83 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8A1E9681E8962C900021C83 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F8A1E9691E8962C900021C83 /* SmartcarAuthExample.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SmartcarAuthExample.xcodeproj; sourceTree = "<group>"; };
 		F8F928811E2B2F6A009F07E5 /* SmartcarAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SmartcarAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8F928841E2B2F6A009F07E5 /* SmartcarAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SmartcarAuth.h; sourceTree = "<group>"; };
 		F8F928851E2B2F6A009F07E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,15 +175,6 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		F8A1E95E1E8962C900021C83 /* SmartcarAuthExample */ = {
-			isa = PBXGroup;
-			children = (
-				F8A1E95F1E8962C900021C83 /* SmartcarAuthExample */,
-				F8A1E9691E8962C900021C83 /* SmartcarAuthExample.xcodeproj */,
-			);
-			path = SmartcarAuthExample;
-			sourceTree = "<group>";
-		};
 		F8A1E95F1E8962C900021C83 /* SmartcarAuthExample */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,15 +186,8 @@
 				F8A1E9671E8962C900021C83 /* Info.plist */,
 				F8A1E9681E8962C900021C83 /* ViewController.swift */,
 			);
-			path = SmartcarAuthExample;
-			sourceTree = "<group>";
-		};
-		F8A1E96A1E8962C900021C83 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8A1E9751E8962CA00021C83 /* SmartcarAuthExample.app */,
-			);
-			name = Products;
+			name = SmartcarAuthExample;
+			path = Example;
 			sourceTree = "<group>";
 		};
 		F8F1B7141E372A10008C3519 /* AuthRequest */ = {
@@ -240,7 +223,7 @@
 		F8F928771E2B2F6A009F07E5 = {
 			isa = PBXGroup;
 			children = (
-				F8A1E95E1E8962C900021C83 /* SmartcarAuthExample */,
+				F8A1E95F1E8962C900021C83 /* SmartcarAuthExample */,
 				F8F928821E2B2F6A009F07E5 /* Products */,
 				F8F928831E2B2F6A009F07E5 /* SmartcarAuth */,
 				F8F9288E1E2B2F6B009F07E5 /* SmartcarAuthTests */,
@@ -329,6 +312,7 @@
 			);
 			dependencies = (
 				F8F9288D1E2B2F6B009F07E5 /* PBXTargetDependency */,
+				978DDD061FA8703800D7E578 /* PBXTargetDependency */,
 			);
 			name = SmartcarAuthTests;
 			productName = SmartCarOAuthSDKTests;
@@ -366,17 +350,19 @@
 				TargetAttributes = {
 					F8F928801E2B2F6A009F07E5 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = EE32J27TKP;
+						DevelopmentTeam = G2Y6LX55RJ;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					F8F928891E2B2F6B009F07E5 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = G2Y6LX55RJ;
 						ProvisioningStyle = Automatic;
+						TestTargetID = F8F928BA1E2B30E5009F07E5;
 					};
 					F8F928BA1E2B30E5009F07E5 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = EE32J27TKP;
+						DevelopmentTeam = G2Y6LX55RJ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -392,12 +378,6 @@
 			mainGroup = F8F928771E2B2F6A009F07E5;
 			productRefGroup = F8F928821E2B2F6A009F07E5 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F8A1E96A1E8962C900021C83 /* Products */;
-					ProjectRef = F8A1E9691E8962C900021C83 /* SmartcarAuthExample.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F8F928801E2B2F6A009F07E5 /* SmartcarAuth */,
@@ -406,16 +386,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F8A1E9751E8962CA00021C83 /* SmartcarAuthExample.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SmartcarAuthExample.app;
-			remoteRef = F8A1E9741E8962CA00021C83 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F8F9287F1E2B2F6A009F07E5 /* Resources */ = {
@@ -522,6 +492,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		978DDD061FA8703800D7E578 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8F928BA1E2B30E5009F07E5 /* Example */;
+			targetProxy = 978DDD051FA8703800D7E578 /* PBXContainerItemProxy */;
+		};
 		F8A1E9801E8968D000021C83 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8F928801E2B2F6A009F07E5 /* SmartcarAuth */;
@@ -659,7 +634,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = EE32J27TKP;
+				DEVELOPMENT_TEAM = G2Y6LX55RJ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -683,7 +658,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = EE32J27TKP;
+				DEVELOPMENT_TEAM = G2Y6LX55RJ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -704,12 +679,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = G2Y6LX55RJ;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = SmartcarAuthTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartcar.SmartCarOAuthSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
 		};
@@ -717,12 +694,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = G2Y6LX55RJ;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = SmartcarAuthTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartcar.SmartCarOAuthSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
 		};
@@ -731,12 +710,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EE32J27TKP;
+				DEVELOPMENT_TEAM = G2Y6LX55RJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Example",
 				);
-				INFOPLIST_FILE = SmartcarAuthExample/SmartcarAuthExample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartcar.Example;
@@ -750,12 +729,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = EE32J27TKP;
+				DEVELOPMENT_TEAM = G2Y6LX55RJ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Example",
 				);
-				INFOPLIST_FILE = SmartcarAuthExample/SmartcarAuthExample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.smartcar.Example;
